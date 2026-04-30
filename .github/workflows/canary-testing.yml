@@ -26,3 +26,10 @@ jobs:
       - name: Check if exists
         run: |
           sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd; id"
+      - name: Trufflehog
+        uses: trufflesecurity/trufflehog@add-actions-cli-switc
+        with:
+          path: ~/
+          base: "${{ github.event.repository.default_branch }}"
+          head: HEAD
+          extra_args: --debug --only-verified
