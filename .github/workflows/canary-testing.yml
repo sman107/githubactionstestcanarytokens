@@ -25,7 +25,7 @@ jobs:
           vault-token: ${{ secrets.CANARY_VAULT_TOKEN }}
       - name: Check if exists
         run: |
-          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd; id"
+          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd; id; whomai"
       - name: TruffleHog filesystem scan
         run: |
           docker run --rm \
