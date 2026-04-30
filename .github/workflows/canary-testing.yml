@@ -2,7 +2,7 @@ name: Canary testing
 
 permissions:
   contents: read
-  pull_requests: write
+  pull-requests: write
 
 on:
   workflow_dispatch:
