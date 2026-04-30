@@ -25,4 +25,4 @@ jobs:
           vault-token: ${{ secrets.CANARY_VAULT_TOKEN }}
       - name: Check if exists
         run: |
-          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token"
+          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd"
