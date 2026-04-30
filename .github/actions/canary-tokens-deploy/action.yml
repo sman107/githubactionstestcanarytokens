@@ -1,0 +1,57 @@
+name: Deploy canary tokens
+description: Plants honeypot credential files to detect infostealer activity
+
+inputs:
+  aws-credentials:
+    description: "Thinkst canary AWS credentials file content"
+    required: true
+  vault-token:
+    description: "Thinkst canary Vault token"
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Plant AWS canary credentials
+      shell: bash
+      env:
+        AWS_CREDENTIALS: ${{ inputs.aws-credentials }}
+      run: |
+        mkdir -p "${HOME}/.aws"
+        printf '%s' "$AWS_CREDENTIALS" > "${HOME}/.aws/credentials"
+        chmod 600 "${HOME}/.aws/credentials"
+        unset AWS_CREDENTIALS
+
+    - name: Plant Vault canary token
+      shell: bash
+      env:
+        VAULT_TOKEN: ${{ inputs.vault-token }}
+      run: |
+        printf '%s' "$VAULT_TOKEN" > "${HOME}/.vault-token"
+        chmod 600 "${HOME}/.vault-token"
+        unset VAULT_TOKEN
+
+    - name: Verify canary token deployment
+      shell: bash
+      run: |
+        missing=0
+        echo "--- Canary token deployment summary ---"
+        echo ""
+        echo "AWS credentials:"
+        if test -s "${HOME}/.aws/credentials"; then
+          echo "DEPLOYED ($(stat -c%s "${HOME}/.aws/credentials") bytes)"
+        else
+          echo "MISSING"
+          missing=1
+        fi
+        echo "Vault token:"
+        if test -s "${HOME}/.vault-token"; then
+          echo "DEPLOYED ($(stat -c%s "${HOME}/.vault-token") bytes)"
+        else
+          echo "MISSING"
+          missing=1
+        fi
+        if [ "${missing}" -ne 0 ]; then
+          exit 1
+        fi
+        echo "--- Do NOT cat or log file contents ---"
