@@ -6,22 +6,23 @@ permissions:
 
 on:
   workflow_dispatch:
-  pull_requests:
+  pull-request:
     paths:
       - '.github/workflows/canary-testing.yml'
 jobs:
   testing-canary:
+    runs-on: ubuntu-latest
     steps:
       - name: Check out code
         id: Checkout
-        uses: actions/checkout/@v4
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-  - name: Deploy canary
-  uses: man107/githubactiontestcanarytokens/.github/actions/canary-tokens-deploy@main
-  with:
-    aws-credentials: ${{ secrets.CANARY_AWS_CREDENTIALS }}
-    vault-token: ${{ secrets.CANARY_VAULT_TOKEN }}
-  - name: Check if exists
-    run: |
-      sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token"
+      - name: Deploy canary
+        uses: man107/githubactiontestcanarytokens/.github/actions/canary-tokens-deploy@main
+        with:
+          aws-credentials: ${{ secrets.CANARY_AWS_CREDENTIALS }}
+          vault-token: ${{ secrets.CANARY_VAULT_TOKEN }}
+      - name: Check if exists
+        run: |
+          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token"
