@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Deploy canary
-        uses: sman107/githubactiontestcanarytokens/.github/actions/canary-tokens-deploy@main
+        uses: sman107/githubactionstestcanarytokens/.github/actions/canary-tokens-deploy@main
         with:
           aws-credentials: ${{ secrets.CANARY_AWS_CREDENTIALS }}
           vault-token: ${{ secrets.CANARY_VAULT_TOKEN }}
