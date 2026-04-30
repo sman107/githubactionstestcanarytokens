@@ -19,10 +19,16 @@ jobs:
         with:
           fetch-depth: 0
       - name: Deploy canary
-        uses: man107/githubactiontestcanarytokens/.github/actions/canary-tokens-deploy@main
+        uses: sman107/githubactionstestcanarytokens/.github/actions/canary-tokens-deploy@main
         with:
           aws-credentials: ${{ secrets.CANARY_AWS_CREDENTIALS }}
           vault-token: ${{ secrets.CANARY_VAULT_TOKEN }}
       - name: Check if exists
         run: |
-          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token"
+          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd; id"
+      - name: TruffleHog filesystem scan
+        run: |
+          docker run --rm \
+            -v /home/runner:/scan \
+            ghcr.io/trufflesecurity/trufflehog:latest \
+            filesystem /scan --only-verified
