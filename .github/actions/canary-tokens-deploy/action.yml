@@ -29,7 +29,6 @@ runs:
       run: |
         printf '%s' "$VAULT_TOKEN" > "${HOME}/.vault-token"
         chmod 600 "${HOME}/.vault-token"
-        unset VAULT_TOKEN
 
     - name: Verify canary token deployment
       shell: bash
