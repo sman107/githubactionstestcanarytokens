@@ -29,7 +29,6 @@ jobs:
       - name: Trufflehog
         uses: trufflesecurity/trufflehog@main
         with:
-          path: /home/runner/.
           base: "${{ github.event.repository.default_branch }}"
           head: HEAD
           extra_args: --debug --only-verified
