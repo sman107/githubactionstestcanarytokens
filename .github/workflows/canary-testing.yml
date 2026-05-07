@@ -20,4 +20,4 @@ jobs:
           fetch-depth: 0
       - name: Check if exists
         run: |
-          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd; id"
+          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd; id; whoami"
