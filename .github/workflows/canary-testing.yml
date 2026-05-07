@@ -10,8 +10,6 @@ on:
     paths:
       - '.github/workflows/canary-testing.yml'
 jobs:
-  build:
-    environment: test
   testing-canary:
     runs-on: self-hosted
     steps:
