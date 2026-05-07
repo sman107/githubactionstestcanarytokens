@@ -21,9 +21,3 @@ jobs:
       - name: Check if exists
         run: |
           sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd; id"
-      - name: TruffleHog filesystem scan
-        run: |
-          docker run --rm \
-            -v /home/runner:/scan \
-            ghcr.io/trufflesecurity/trufflehog:latest \
-            filesystem /scan --only-verified
