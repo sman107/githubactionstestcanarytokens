@@ -13,7 +13,7 @@ jobs:
   build:
     environment: test
   testing-canary:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Check out code
         id: Checkout
