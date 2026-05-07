@@ -11,7 +11,7 @@ on:
       - '.github/workflows/canary-testing.yml'
 jobs:
   testing-canary:
-    runs-on: self-hosted
+    runs-on: test-runners
     steps:
       - name: Check out code
         id: Checkout
